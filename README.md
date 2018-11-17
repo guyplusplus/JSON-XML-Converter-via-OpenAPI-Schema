@@ -12,7 +12,7 @@ String jsonOutput = jsonSchemaForXML.mapXMLToJSONString("<root>...xml document..
 
 # Basic Example
 
-Sample Input Schema
+Sample OpenAPI Schema
 
 ```json
 {
@@ -43,6 +43,89 @@ Sample Input JSON (and outout JSON of same data above)
 ```json
 {
   "aString": "Hello !!"
+}
+```
+
+# Advanced Example
+
+Sample OpenAPI Schema
+
+```json
+{
+  "$id": "https://example.com/person.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "person": {
+      "type": "object",
+      "properties": {
+        "uid":             { "$ref": "#/definitions/uid" },
+        "name":            { "$ref": "#/definitions/personName" },
+        "children": {
+          "type": "array",
+          "items":         { "$ref": "#/definitions/person" },
+          "xml": {
+            "wrapped": true
+          }
+        }
+      },
+      "xml": {
+        "name": "person"
+      }
+    },
+    "uid": {
+      "type": "integer",
+      "xml": {
+        "attribute": true
+      }
+    },
+    "personName": {
+      "type": "string"
+    }
+  },
+  "$ref": "#/definitions/person"
+}
+```
+
+Sample Input XML (and output XML of sample data bellow)
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<person uid="0">
+    <name>John</name>
+    <children>
+        <person uid="1">
+            <name>Paul</name>
+        </person>
+        <person uid="2">
+            <name>Helen</name>
+            <children>
+                <person uid="5">
+                    <name>Lilly</name>
+                </person>
+            </children>
+        </person>
+    </children>
+</person>
+```
+
+Sample Input JSON (and outout JSON of same data above)
+```json
+{
+  "uid": 0,
+  "children": [
+    {
+      "uid": 1,
+      "name": "Paul"
+    },
+    {
+      "uid": 2,
+      "children": [{
+        "uid": 5,
+        "name": "Lilly"
+      }],
+      "name": "Helen"
+    }
+  ],
+  "name": "John"
 }
 ```
 
