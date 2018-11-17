@@ -58,8 +58,8 @@ Sample OpenAPI Schema
     "person": {
       "type": "object",
       "properties": {
-        "uid":             { "$ref": "#/definitions/uid" },
-        "name":            { "$ref": "#/definitions/personName" },
+        "uid":             { "$ref": "#/definitions/nationalId" },
+        "fullname":        { "$ref": "#/definitions/fullname" },
         "children": {
           "type": "array",
           "items":         { "$ref": "#/definitions/person" },
@@ -72,14 +72,18 @@ Sample OpenAPI Schema
         "name": "person"
       }
     },
-    "uid": {
+    "nationalId": {
       "type": "integer",
       "xml": {
         "attribute": true
       }
     },
-    "personName": {
-      "type": "string"
+    "fullname": {
+      "type": "string",
+      "xml": {
+        "prefix": "global",
+        "namespace": "https://test.com/global"
+      }
     }
   },
   "$ref": "#/definitions/person"
@@ -90,16 +94,16 @@ Sample Input XML (and output XML of sample data bellow)
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <person uid="0">
-    <name>John</name>
+    <global:fullname xmlns:global="https://test.com/global">John</global:fullname>
     <children>
         <person uid="1">
-            <name>Paul</name>
+            <global:fullname xmlns:global="https://test.com/global">Paul</global:fullname>
         </person>
         <person uid="2">
-            <name>Helen</name>
+            <global:fullname xmlns:global="https://test.com/global">Helen</global:fullname>
             <children>
                 <person uid="5">
-                    <name>Lilly</name>
+                    <global:fullname xmlns:global="https://test.com/global">Lilly</global:fullname>
                 </person>
             </children>
         </person>
@@ -114,18 +118,18 @@ Sample Input JSON (and outout JSON of same data above)
   "children": [
     {
       "uid": 1,
-      "name": "Paul"
+      "fullname": "Paul"
     },
     {
       "uid": 2,
       "children": [{
         "uid": 5,
-        "name": "Lilly"
+        "fullname": "Lilly"
       }],
-      "name": "Helen"
+      "fullname": "Helen"
     }
   ],
-  "name": "John"
+  "fullname": "John"
 }
 ```
 
