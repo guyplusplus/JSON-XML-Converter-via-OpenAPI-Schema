@@ -39,7 +39,7 @@ Sample Input XML (and output XML of sample data bellow)
 </root>
 ```
 
-Sample Input JSON (and output JSON of same data above)
+Sample Input JSON (and output JSON of sample data above)
 ```json
 {
   "aString": "Hello !!"
@@ -112,7 +112,7 @@ Sample Input XML (and output XML of sample data bellow)
 </person>
 ```
 
-Sample Input JSON (and output JSON of same data above)
+Sample Input JSON (and output JSON of sample data above)
 ```json
 {
   "uid": 0,
