@@ -12,7 +12,7 @@ String jsonOutput = jsonSchemaForXML.mapXMLToJSONString("<root>...xml document..
 
 # Basic Example
 
-Sample OpenAPI Schema
+Sample OpenAPI flavored JSON Schema
 
 ```json
 {
@@ -48,7 +48,7 @@ Sample Input JSON (and outout JSON of same data above)
 
 # Advanced Example
 
-Sample OpenAPI Schema
+Sample OpenAPI flavored JSON Schema
 
 ```json
 {
@@ -86,6 +86,7 @@ Sample OpenAPI Schema
       }
     }
   },
+  
   "$ref": "#/definitions/person"
 }
 ```
