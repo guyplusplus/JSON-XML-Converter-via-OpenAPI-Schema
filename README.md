@@ -5,7 +5,7 @@ It is a JAVA based library.
 # Sample Code
 
 ```java
-JSONSchemaForXML jsonSchemaForXML = new JSONSchemaForXML("{...json schema...}");
+JSONSchemaForXML jsonSchemaForXML = new JSONSchemaForXML("{...OpenAPI flavored json schema...}");
 String xmlOutput = jsonSchemaForXML.mapJSONToXMLString("{...json object...}", true); //true means formatted
 String jsonOutput = jsonSchemaForXML.mapXMLToJSONString("<root>...xml document...</root>", true);
 ```
