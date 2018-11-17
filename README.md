@@ -6,7 +6,7 @@ It is a JAVA based library.
 
 ```java
 JSONSchemaForXML jsonSchemaForXML = new JSONSchemaForXML("{...json schema...}");
-String xmlOutput = jsonSchemaForXML.mapJSONToXMLString("{...json object...}", true);
+String xmlOutput = jsonSchemaForXML.mapJSONToXMLString("{...json object...}", true); //true means formatted
 String jsonOutput = jsonSchemaForXML.mapXMLToJSONString("<root>...xml document...</root>", true);
 ```
 
@@ -22,7 +22,10 @@ Sample Input Schema
   "type": "object",
   "properties": {
     "aString": {
-      "type": "string"
+      "type": "string",
+      "xml": {
+        "name": "xml_string"
+      }
     }
   }
 }
@@ -30,8 +33,9 @@ Sample Input Schema
 
 Sample Input XML (and output XML of sample data bellow)
 ```xml
+<?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <aString>Hello !!</aString>
+    <xml_string>Hello !!</xml_string>
 </root>
 ```
 
