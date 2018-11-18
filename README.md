@@ -7,7 +7,7 @@ It is a JAVA based library.
 ```java
 JSONSchemaForXML jsonSchemaForXML = new JSONSchemaForXML("{...OpenAPI flavored json schema...}");
 String xmlOutput = jsonSchemaForXML.mapJSONToXMLString("{...json object...}", true); //true means formatted
-String jsonOutput = jsonSchemaForXML.mapXMLToJSONString("<root>...xml document...</root>", true);
+String jsonOutput = jsonSchemaForXML.mapXMLToJSONString("<root>...xml document...</root>", true); //true means formatted
 ```
 
 # Basic Example
@@ -102,6 +102,7 @@ Sample Input XML (and output XML of sample data bellow)
         </person>
         <person uid="2">
             <global:fullname xmlns:global="https://test.com/global">Helen Brooks</global:fullname>
+            <dob>19651231</dob>
             <children>
                 <person uid="5">
                     <global:fullname xmlns:global="https://test.com/global">Lilly Alderberg</global:fullname>
