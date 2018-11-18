@@ -6,8 +6,25 @@
 	<artifactId>xmljsonconvert</artifactId>
 	<packaging>jar</packaging>
 	<version>0.9.1-SNAPSHOT</version>
+	
 	<name>JSON-XML-Converter-via-OpenAPI-Schema</name>
+	<description>This library converts JSON to and from XML based on the JSON schema included in the swagger / OpenAPI 3 document. It is a JAVA based library</description>
 	<url>http://maven.apache.org</url>
+	
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://github.com/guyplusplus/JSON-XML-Converter-via-OpenAPI-Schema/blob/master/LICENSE</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+
+	<scm>
+		<url>https://github.com/guyplusplus/JSON-XML-Converter-via-OpenAPI-Schema</url>
+		<connection>scm:git:git://github.com/guyplusplus/JSON-XML-Converter-via-OpenAPI-Schema</connection>
+	</scm>
+
 
 	<properties>
 		<!-- https://maven.apache.org/general.html#encoding-warning -->

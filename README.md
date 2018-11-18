@@ -95,16 +95,16 @@ Sample Input XML (and output XML of sample data bellow)
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <person uid="0">
-    <global:fullname xmlns:global="https://test.com/global">John</global:fullname>
+    <global:fullname xmlns:global="https://test.com/global">John Brooks</global:fullname>
     <children>
         <person uid="1">
-            <global:fullname xmlns:global="https://test.com/global">Paul</global:fullname>
+            <global:fullname xmlns:global="https://test.com/global">Paul Brooks</global:fullname>
         </person>
         <person uid="2">
-            <global:fullname xmlns:global="https://test.com/global">Helen</global:fullname>
+            <global:fullname xmlns:global="https://test.com/global">Helen Brooks</global:fullname>
             <children>
                 <person uid="5">
-                    <global:fullname xmlns:global="https://test.com/global">Lilly</global:fullname>
+                    <global:fullname xmlns:global="https://test.com/global">Lilly Alderberg</global:fullname>
                 </person>
             </children>
         </person>
@@ -119,18 +119,19 @@ Sample Input JSON (and output JSON of sample data above)
   "children": [
     {
       "uid": 1,
-      "fullname": "Paul"
+      "fullname": "Paul Brooks"
     },
     {
       "uid": 2,
       "children": [{
         "uid": 5,
-        "fullname": "Lilly"
+        "fullname": "Lilly Alderberg"
       }],
-      "fullname": "Helen"
+      "dob": "19651231",
+      "fullname": "Helen Brooks"
     }
   ],
-  "fullname": "John"
+  "fullname": "John Brooks"
 }
 ```
 
