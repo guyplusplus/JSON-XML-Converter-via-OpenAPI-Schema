@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -95,7 +96,7 @@ public class JSONToXMLConverter {
 			else if(e == Event.VALUE_STRING || e == Event.VALUE_NUMBER ||
 					e == Event.VALUE_NULL || e == Event.VALUE_TRUE || e == Event.VALUE_FALSE) {
 				jpath.pushIndex(arrayIndex++);
-				String memberValue = getAndValidateValue(parser, e, xmlNodeSpecArray.getItemsXMLNodeSpec().getNodeType(), jpath);
+				String memberValue = getAndValidateValue(parser, e, xmlNodeSpecArray.getItemsXMLNodeSpec(), jpath);
 				addKeyValueLeafElement(targetElement, (XMLNodeSpecPrimitiveType)xmlNodeSpecArray.getItemsXMLNodeSpec(), arrayFQElementName, memberValue, jpath);
 				jpath.pop();
 			}
@@ -140,7 +141,7 @@ public class JSONToXMLConverter {
 				}
 			}
 			else if(e == Event.VALUE_STRING || e == Event.VALUE_TRUE || e == Event.VALUE_FALSE || e == Event.VALUE_NUMBER || e == Event.VALUE_NULL) {
-				String memberValue = getAndValidateValue(parser, e, childXmlNodeSpec.getNodeType(), jpath);
+				String memberValue = getAndValidateValue(parser, e, childXmlNodeSpec, jpath);
 				addKeyValueLeafElement(objectElement, (XMLNodeSpecPrimitiveType)childXmlNodeSpec, memberKey, memberValue, jpath);
 				jpath.pop();
 			}
@@ -149,7 +150,8 @@ public class JSONToXMLConverter {
 		}		
 	}
 	
-	private static String getAndValidateValue(JsonParserWrapper parser, Event currentEvent, int nodeType, SimplePath jpath) throws MapException {
+	private static String getAndValidateValue(JsonParserWrapper parser, Event currentEvent,  XMLNodeSpec xmlNodeSpec, SimplePath jpath) throws MapException {
+		int nodeType = xmlNodeSpec.getNodeType();
 		if(currentEvent == Event.VALUE_STRING) {
 			if(nodeType != XMLNodeSpec.TYPE_STRING)
 				throw new MapException("Value should not be a string", jpath);
@@ -171,11 +173,11 @@ public class JSONToXMLConverter {
 			return "false";
 		}
 		else if(currentEvent == Event.VALUE_NULL) {
-			if(nodeType != XMLNodeSpec.TYPE_NULL)
-				throw new MapException("Value should not be a null", jpath);
+			//check if null object is allowed
+			if(!xmlNodeSpec.isNullable())
+				throw new MapException("Property is not nullable", jpath);
 			return "null";
 		}
-		//never happens
 		throw new MapException("Internal error", jpath);
 	}
 

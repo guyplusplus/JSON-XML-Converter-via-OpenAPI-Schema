@@ -11,9 +11,9 @@ public abstract class XMLNodeSpec {
 	static final int TYPE_NUMBER = 4;
 	static final int TYPE_INTEGER = 5;
 	static final int TYPE_BOOLEAN = 6;
-	static final int TYPE_NULL = 7;
 	
 	protected int nodeType = TYPE_UNDEFINED;
+	protected boolean isNullable = false;
 	protected String xmlName = null;
 	protected String xmlPrefix = null;
 	protected String xmlNamespace = null;
@@ -35,13 +35,15 @@ public abstract class XMLNodeSpec {
 			return TYPE_INTEGER;
 		if(type.equals("boolean"))
 			return TYPE_BOOLEAN;
-		if(type.equals("null"))
-			return TYPE_NULL;
 		throw new JSONSchemaLoadException("Unknow JSON schema type '" + type + "'");
 	}
 	
 	public boolean isPrimitiveType() {
 		return false;
+	}
+	
+	public boolean isNullable() {
+		return isNullable;
 	}
 	
 	public XMLNodeSpec(int nodeType) {
@@ -81,6 +83,7 @@ public abstract class XMLNodeSpec {
 	}
 	
 	public void loadJSONValue(JSONObject schema, String valueDesriptionForException) throws JSONSchemaLoadException {
+		isNullable = schema.optBoolean("nullable");
 		loadXML(schema.optJSONObject("xml"));
 	}
 

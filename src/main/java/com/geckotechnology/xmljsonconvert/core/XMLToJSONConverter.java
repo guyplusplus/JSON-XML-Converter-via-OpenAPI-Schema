@@ -187,7 +187,7 @@ public class XMLToJSONConverter {
 					throw new MapException("Unknown StAX event type '" + eventType + "' while parsing XML", xpath);
 				}
 			}
-			return createObjectFromPrimitiveTypeProperty(characters, xmlNodeSpecPrimitiveType.getNodeType(), xpath);
+			return createObjectFromPrimitiveTypeProperty(characters, xmlNodeSpecPrimitiveType, xpath);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			throw new MapException("Problem to create the target JSON object", xpath);
@@ -226,7 +226,7 @@ public class XMLToJSONConverter {
 				if(prefixName != null && attributePropertyXMLNodeSpec.getXmlNodeSpec().getXmlNamespace() != null)
 					if(!attributePropertyXMLNodeSpec.getXmlNodeSpec().getXmlNamespace().equals(reader.getAttributeNamespace(attributeIndex)))
 						throw new MapException("Invalid namespace", xpath);
-				Object attributeValue = createObjectFromPrimitiveTypeProperty(reader.getAttributeValue(attributeIndex), attributePropertyXMLNodeSpec.getXmlNodeSpec().getNodeType(), xpath); 
+				Object attributeValue = createObjectFromPrimitiveTypeProperty(reader.getAttributeValue(attributeIndex), attributePropertyXMLNodeSpec.getXmlNodeSpec(), xpath); 
 				addKeyValueToJSONObject(attributePropertyXMLNodeSpec.getPropertyName(), attributeValue, o, xpath, false);
 				xpath.pop();
 			}
@@ -316,10 +316,16 @@ public class XMLToJSONConverter {
 		o.put(key, value);
 	}
 
-	static private Object createObjectFromPrimitiveTypeProperty(String characters, int nodeType, SimplePath xpath) throws MapException {
+	static private Object createObjectFromPrimitiveTypeProperty(String characters, XMLNodeSpec xmlNodeSpec, SimplePath xpath) throws MapException {
+		int nodeType = xmlNodeSpec.getNodeType();
 		String charactersTrimmed = characters.trim();
 		if(nodeType == XMLNodeSpec.TYPE_STRING) {
 			return charactersTrimmed;
+		}
+		else if(characters.equalsIgnoreCase("null")) {
+			if(!xmlNodeSpec.isNullable())
+				throw new MapException("Property is not nullable", xpath);
+			return JSONObject.NULL;
 		}
 		else if(nodeType == XMLNodeSpec.TYPE_BOOLEAN) {
 			if(charactersTrimmed.equalsIgnoreCase("true"))
@@ -348,13 +354,8 @@ public class XMLToJSONConverter {
 				throw new MapException("Failure to convert text to a number", xpath);
 			}
 		}
-		else if(nodeType == XMLNodeSpec.TYPE_NULL) {
-			if(charactersTrimmed.equalsIgnoreCase("null"))
-				return JSONObject.NULL;
-			throw new MapException("Failure to convert text to a null", xpath);
-		}
-		else
-			throw new MapException("Unknown XMLNodeSpec type " + nodeType, xpath);
+		//never happens
+		throw new MapException("Unknown XMLNodeSpec type " + nodeType, xpath);
 	}
 	
 	static private Object parsePropertyValueWithoutSchema(XMLStreamReader reader, String propertyName, SimplePath xpath) throws MapException {

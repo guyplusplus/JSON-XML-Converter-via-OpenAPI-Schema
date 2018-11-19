@@ -45,6 +45,7 @@ public class SimplePath {
 	
 	/**
 	 * May throw EmptyStackException
+	 * @return this object
 	 */
 	public SimplePath pop() {
 		path.pop();

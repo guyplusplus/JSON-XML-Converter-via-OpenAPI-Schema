@@ -187,7 +187,7 @@ public class JSONSchemaForXML {
 			transformer.setOutputProperty(OutputKeys.INDENT, formatOutput ? "yes" : "no");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", XML_INDENT_SPACES);
 			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, formatOutput ? "no" : "yes"); //TODO check new line
+			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, formatOutput ? "no" : "yes"); //TODO fix: new line does not show at the end
 			DOMSource domSource = new DOMSource(inputDocument);
 			StringWriter sw = new StringWriter();
 			StreamResult sr = new StreamResult(sw);
