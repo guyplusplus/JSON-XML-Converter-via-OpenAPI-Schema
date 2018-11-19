@@ -2,6 +2,8 @@
 This library converts JSON to and from XML based on the JSON schema included in the swagger / OpenAPI 3 document.
 It is a JAVA based library.
 
+The performance of the convertion is very good as both XML-to-JSON and JSON-to-XML is using streamed based parser. The target object is though created in memory before being converted into a string.
+
 # Sample Code
 
 ```java
@@ -26,6 +28,9 @@ Sample OpenAPI flavored JSON Schema
       "xml": {
         "name": "xml_string"
       }
+    },
+    "aNumber": {
+      "type": "number"
     }
   }
 }
@@ -36,12 +41,14 @@ Sample Input XML (and output XML of sample data bellow)
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <xml_string>Hello !!</xml_string>
+    <aNumber>12.34</aNumber>
 </root>
 ```
 
 Sample Input JSON (and output JSON of sample data above)
 ```json
 {
+  "aNumber": 12.34,
   "aString": "Hello !!"
 }
 ```
