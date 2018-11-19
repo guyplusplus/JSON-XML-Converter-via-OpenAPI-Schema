@@ -61,6 +61,26 @@
       	"wrapped": true
       }
     },
+    "numbers1": {
+      "type": "array",
+      "items": {
+        "type": "number",
+        "nullable": true
+      },
+      "xml": {
+        "wrapped": true
+      }
+    },
+    "numbers2": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "number"
+      },
+      "xml": {
+        "wrapped": true
+      }
+    },
     "relationships": {
       "type": "array",
       "items": {

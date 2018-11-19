@@ -16,8 +16,9 @@
     "aBoolean": {
       "type": "boolean"
     },
-    "aNull": {
-      "type": "null"
+    "aNullableNumber": {
+      "type": "number",
+      "nullable": true
     },
     "anObject": {
       "type": "object",
@@ -35,6 +36,7 @@
     },
     "anObject2": {
       "type": "object",
+      "nullable": true,
       "properties": {
         "str1": {
           "type": "string"
