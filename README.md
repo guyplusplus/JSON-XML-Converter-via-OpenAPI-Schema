@@ -1,5 +1,8 @@
 # JSON-XML Converter via OpenAPI Schema 
-This library converts JSON to and from XML based on the JSON schema included in the swagger / OpenAPI 3 document.
+This library converts JSON to and from XML based on the JSON schema objects included in the swagger / OpenAPI 3 document. The schema objects contain XML hints that adds more capability. For more information:
+* introduction: https://swagger.io/docs/specification/data-models/representing-xml/
+* specifications: https://swagger.io/specification/#xmlObject
+
 It is a JAVA based library.
 
 The performance of the convertion is very good as both XML-to-JSON and JSON-to-XML is using streamed based parser. The target object is though created in memory before being converted into a string.
@@ -14,7 +17,7 @@ String jsonOutput = jsonSchemaForXML.mapXMLToJSONString("<root>...xml document..
 
 # Basic Example
 
-Sample OpenAPI flavored JSON Schema
+Sample OpenAPI containing a simple JSON Schema object. It contains a number and a string property. The xml object renames the XML element of the string property.
 
 ```json
 {
@@ -36,7 +39,7 @@ Sample OpenAPI flavored JSON Schema
 }
 ```
 
-Sample Input XML (and output XML of sample data bellow)
+Sample XML Input (and XML output of sample JSON data bellow)
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
@@ -45,7 +48,7 @@ Sample Input XML (and output XML of sample data bellow)
 </root>
 ```
 
-Sample Input JSON (and output JSON of sample data above)
+Sample JSON Input (and JSON output of sample XML data above)
 ```json
 {
   "aNumber": 12.34,
@@ -98,7 +101,7 @@ Sample OpenAPI flavored JSON Schema
 }
 ```
 
-Sample Input XML (and output XML of sample data bellow)
+Sample XML Input (and XML output of sample JSON data bellow)
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <person uid="0">
@@ -120,7 +123,7 @@ Sample Input XML (and output XML of sample data bellow)
 </person>
 ```
 
-Sample Input JSON (and output JSON of sample data above)
+Sample JSON Input (and JSON output of sample XML data above)
 ```json
 {
   "uid": 0,
@@ -164,10 +167,13 @@ Add a dependency to your `pom.xml`:
 
 # TODO (by order of priority):
 * ability to control for XML to JSON
-  * if an empty XML non wrapped array (hence no XML element) creates an empty JSON array
-  * space trim for string content (text node) and XML attributes (quote delimited)
+  * if an empty XML non wrapped array (hence no XML element) creates an empty JSON array or not (default is not)
+  * space trim for string content (text node) and/or XML attributes (quote delimited)
   * for additional properties
-    * if number, boolean and null are mapped to their type rather than a string
+    * if number, boolean and null are mapped to their primitive type rather than a string as default
+* ability to control for JSON to XML
+  * for additional properties
+    * wrap or not an array (default is wrap)
 * Support for const without type
 * additionalProperties support:
   * with schema
