@@ -153,7 +153,7 @@ Add a dependency to your `pom.xml`:
 <dependency>
     <groupId>com.geckotechnology.xmljsonconvert</groupId>
     <artifactId>xmljsonconvert</artifactId>
-    <version>0.9.1</version>
+    <version>0.9.2</version>
 </dependency>
 ```
 
@@ -175,7 +175,8 @@ Add a dependency to your `pom.xml`:
 * ability to control for JSON to XML
   * for additional properties
     * wrap or not an array (default is wrap)
-* Support for const without type
+* null and nullable support for array and object types
+	* Support for const without type
 * additionalProperties support:
   * with schema
 * Support schema oneOf, anyOf, allOf, not
