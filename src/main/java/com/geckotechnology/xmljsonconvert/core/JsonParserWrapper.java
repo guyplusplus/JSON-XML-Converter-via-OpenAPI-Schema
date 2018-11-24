@@ -55,7 +55,7 @@ public class JsonParserWrapper {
 			if(jsonValue.getValueType() == ValueType.TRUE)
 				return "true";
 			if(jsonValue.getValueType() == ValueType.NULL)
-				return "null";
+				return "";
 			throw new MapException("Invalid primitive type", jpath);
 		} catch (Exception e) {
 			e.printStackTrace();

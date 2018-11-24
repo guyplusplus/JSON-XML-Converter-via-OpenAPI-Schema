@@ -1605,14 +1605,14 @@ public class JSONSchemaForXMLTest {
 			
 		try {
 			//simple primitive properties
-			d = jsonSchemaForXML.mapJSONToXMLDocument("{\"a\":1,\"b\":2.2,\"c\":true,\"d\":null,\"e\":\"aaa\"}");
-			assertTrue(XMLComparator.areObjectsEqual(d, "<root><a>1</a><b>2.2</b><c>true</c><d>null</d><e>aaa</e></root>"));
+			d = jsonSchemaForXML.mapJSONToXMLDocument("{\"a\":1,\"b\":2.2,\"c\":true,\"e\":\"aaa\"}");
+			assertTrue(XMLComparator.areObjectsEqual(d, "<root><a>1</a><b>2.2</b><c>true</c><e>aaa</e></root>"));
 			//inner object
-			d = jsonSchemaForXML.mapJSONToXMLDocument("{\"a\":1,\"myObject\":{\"b\":2.2,\"c\":true,\"d\":null,\"e\":\"aaa\"},\"f\":3}");
-			assertTrue(XMLComparator.areObjectsEqual(d, "<root><a>1</a><myObject><b>2.2</b><c>true</c><d>null</d><e>aaa</e></myObject><f>3</f></root>"));
+			d = jsonSchemaForXML.mapJSONToXMLDocument("{\"a\":1,\"myObject\":{\"b\":2.2,\"c\":true,\"e\":\"aaa\"},\"f\":3}");
+			assertTrue(XMLComparator.areObjectsEqual(d, "<root><a>1</a><myObject><b>2.2</b><c>true</c><e>aaa</e></myObject><f>3</f></root>"));
 			//array object
-			d = jsonSchemaForXML.mapJSONToXMLDocument("{\"a\":[1,2,3,true,false,\"aa\",{\"b\":2.2,\"c\":true,\"d\":null,\"e\":\"aaa\"}]}");
-			assertTrue(XMLComparator.areObjectsEqual(d, "<root><a>1</a><a>2</a><a>3</a><a>true</a><a>false</a><a>aa</a><a><b>2.2</b><c>true</c><d>null</d><e>aaa</e></a></root>"));
+			d = jsonSchemaForXML.mapJSONToXMLDocument("{\"a\":[1,2,3,true,false,\"aa\",{\"b\":2.2,\"c\":true,\"e\":\"aaa\"}]}");
+			assertTrue(XMLComparator.areObjectsEqual(d, "<root><a>1</a><a>2</a><a>3</a><a>true</a><a>false</a><a>aa</a><a><b>2.2</b><c>true</c><e>aaa</e></a></root>"));
 			//array object
 			d = jsonSchemaForXML.mapJSONToXMLDocument("{\"a\":[1,[2,3,4],5]}");
 			assertTrue(XMLComparator.areObjectsEqual(d, "<root><a>1</a><a><a>2</a><a>3</a><a>4</a></a><a>5</a></root>"));
@@ -1631,7 +1631,7 @@ public class JSONSchemaForXMLTest {
 			assertTrue(e.toString().indexOf("path: $.myObject.d") != -1);			
 		}			
 		try {
-			d = jsonSchemaForXML.mapJSONToXMLDocument("{\"a\":1,\"myObject\":{\"b\":2.2,\"c\":true,\"d\":null,\"e\":\"aaa\"},\"f\":xx}");
+			d = jsonSchemaForXML.mapJSONToXMLDocument("{\"a\":1,\"myObject\":{\"b\":2.2,\"c\":true,\"d\":111,\"e\":\"aaa\"},\"f\":xx}");
 			fail("invalid json should throw exception");
 		}
 		catch(Exception e) {
@@ -1847,6 +1847,17 @@ public class JSONSchemaForXMLTest {
 			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"anObject\":{\"str\":\"\",\"int_attr\":1,\"str_nullable\":\"d\",\"int_nullable\":4,\"str_attr\":\"\",\"int_attr_nullable\":2,\"int\":3,\"str_attr_nullable\":\"b\"}}")));
 			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
 			assertTrue(XMLComparator.areObjectsEqual(d, xml));
+			//additional property
+			xml = "<root><anObject new_attr=\"abc\"><new_elem>def</new_elem></anObject></root>";
+			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
+			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"anObject\":{\"new_attr\":\"abc\",\"new_elem\":\"def\"}}")));
+			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
+			assertTrue(XMLComparator.areObjectsEqual(d, "<root><anObject><new_attr>abc</new_attr><new_elem>def</new_elem></anObject></root>"));			
+			//additional property
+			ostr = "{\"anObject\":{\"new_str\":\"\"}}";
+			d = jsonSchemaForXML.mapJSONToXMLDocument(ostr);
+			xml = "<root><anObject><new_str/></anObject></root>";
+			assertTrue(XMLComparator.areObjectsEqual(d, xml));
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -1916,5 +1927,25 @@ public class JSONSchemaForXMLTest {
 			assertTrue(e.toString().indexOf("path: $.anObject.int") != -1);			
 		}	
 
+		try {
+			//additional new null property
+			ostr = "{\"anObject\":{\"new_str\":null}}";
+			d = jsonSchemaForXML.mapJSONToXMLDocument(ostr);
+			fail("additional new null property should throw exception");
+		}
+		catch(Exception e) {
+			assertTrue(e.toString().indexOf("Additonal property is not nullable") != -1);
+			assertTrue(e.toString().indexOf("path: $.anObject.new_str") != -1);			
+		}	
+		try {
+			//additional new array property with null element
+			ostr = "{\"anObject\":{\"new_array\":[1,null,3]}}";
+			d = jsonSchemaForXML.mapJSONToXMLDocument(ostr);
+			fail("additional new null property should throw exception");
+		}
+		catch(Exception e) {
+			assertTrue(e.toString().indexOf("Additonal property is not nullable") != -1);
+			assertTrue(e.toString().indexOf("path: $.anObject.new_array[1]") != -1);			
+		}	
 	}
 }

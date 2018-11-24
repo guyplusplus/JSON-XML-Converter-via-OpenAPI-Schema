@@ -225,11 +225,13 @@ public class JSONToXMLConverter {
 			objectElement.appendChild(propertyElement);
 			addObjectWithoutSchema(parser, propertyElement, memberKey, jpath);
 		}
-		else if(e == Event.VALUE_STRING || e == Event.VALUE_TRUE || e == Event.VALUE_FALSE || e == Event.VALUE_NUMBER || e == Event.VALUE_NULL) {
+		else if(e == Event.VALUE_STRING || e == Event.VALUE_TRUE || e == Event.VALUE_FALSE || e == Event.VALUE_NUMBER) {
 			Element propertyElement = objectElement.getOwnerDocument().createElement(memberKey);
 			objectElement.appendChild(propertyElement);
 			propertyElement.appendChild(propertyElement.getOwnerDocument().createTextNode(parser.getPrimitiveValueAsString(jpath)));
 		}
+		else if(e == Event.VALUE_NULL)
+			throw new MapException("Additonal property is not nullable", jpath);			
 		else
 			throw new MapException("Invalid property value structure", jpath);
 		jpath.pop();
@@ -259,13 +261,15 @@ public class JSONToXMLConverter {
 			else if(e == Event.END_ARRAY) {
 				return;
 			}
-			else if(e == Event.VALUE_STRING || e == Event.VALUE_TRUE || e == Event.VALUE_FALSE || e == Event.VALUE_NUMBER || e == Event.VALUE_NULL) {
+			else if(e == Event.VALUE_STRING || e == Event.VALUE_TRUE || e == Event.VALUE_FALSE || e == Event.VALUE_NUMBER) {
 				Element childPropertyElement = propertyElement.getOwnerDocument().createElement(propertyName);
 				propertyElement.appendChild(childPropertyElement);
 				childPropertyElement.appendChild(propertyElement.getOwnerDocument().createTextNode(parser.getPrimitiveValueAsString(jpath)));
 				jpath.pop(); //previous index of array
 				jpath.pushIndex(++arrayIndex);
 			}
+			else if(e == Event.VALUE_NULL)
+				throw new MapException("Additonal property is not nullable", jpath);			
 			else
 				throw new MapException("Invalid event type", jpath);
 		}				
@@ -294,12 +298,14 @@ public class JSONToXMLConverter {
 				memberKey = parser.getString(jpath);
 				jpath.pushElement(memberKey);
 			}
-			else if(e == Event.VALUE_STRING || e == Event.VALUE_TRUE || e == Event.VALUE_FALSE || e == Event.VALUE_NUMBER || e == Event.VALUE_NULL) {
+			else if(e == Event.VALUE_STRING || e == Event.VALUE_TRUE || e == Event.VALUE_FALSE || e == Event.VALUE_NUMBER) {
 				Element childPropertyElement = propertyElement.getOwnerDocument().createElement(memberKey);
 				propertyElement.appendChild(childPropertyElement);
 				childPropertyElement.appendChild(childPropertyElement.getOwnerDocument().createTextNode(parser.getPrimitiveValueAsString(jpath)));
 				jpath.pop(); //previous memberKey
 			}
+			else if(e == Event.VALUE_NULL)
+				throw new MapException("Additonal property is not nullable", jpath);			
 			else
 				throw new MapException("Invalid event type", jpath);
 		}		
