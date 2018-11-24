@@ -30,8 +30,7 @@
 		<url>https://github.com/guyplusplus/JSON-XML-Converter-via-OpenAPI-Schema</url>
 		<connection>scm:git:git://github.com/guyplusplus/JSON-XML-Converter-via-OpenAPI-Schema.git</connection>
 		<developerConnection>scm:git:git://github.com/guyplusplus/JSON-XML-Converter-via-OpenAPI-Schema.git</developerConnection>
-    <tag>v0.9.2</tag>
-  </scm>
+	</scm>
 
 	<properties>
 		<!-- https://maven.apache.org/general.html#encoding-warning -->
