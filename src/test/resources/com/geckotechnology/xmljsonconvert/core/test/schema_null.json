@@ -1,0 +1,61 @@
+{
+  "$id": "https://example.com/person.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SimpleObject",
+  "type": "object",
+  "properties": {
+    "anObject": {
+      "type": "object",
+      "properties": {
+      
+        "str": {
+          "type": "string"
+        },
+        
+        "str_attr": {
+          "type": "string",
+          "xml": {
+          	"attribute": true
+          }
+        },
+        
+        "str_nullable": {
+          "type": "string",
+          "nullable":true
+        },
+        
+        "str_attr_nullable": {
+          "type": "string",
+          "nullable":true,
+          "xml": {
+          	"attribute": true
+          }
+        },
+        
+        "int": {
+          "type": "integer"
+        },
+        
+        "int_attr": {
+          "type": "integer",
+          "xml": {
+          	"attribute": true
+          }
+        },
+        
+        "int_nullable": {
+          "type": "integer",
+          "nullable":true
+        },
+        
+        "int_attr_nullable": {
+          "type": "integer",
+          "nullable":true,
+          "xml": {
+          	"attribute": true
+          }
+        }
+      }
+    }
+  }
+}

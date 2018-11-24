@@ -322,7 +322,7 @@ public class XMLToJSONConverter {
 		if(nodeType == XMLNodeSpec.TYPE_STRING) {
 			return charactersTrimmed;
 		}
-		else if(characters.equalsIgnoreCase("null")) {
+		else if(characters.length() == 0) {
 			if(!xmlNodeSpec.isNullable())
 				throw new MapException("Property is not nullable", xpath);
 			return JSONObject.NULL;

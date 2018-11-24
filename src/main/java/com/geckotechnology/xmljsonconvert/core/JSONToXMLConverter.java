@@ -175,7 +175,7 @@ public class JSONToXMLConverter {
 			//check if null object is allowed
 			if(!xmlNodeSpec.isNullable())
 				throw new MapException("Property is not nullable", jpath);
-			return "null";
+			return "";
 		}
 		throw new MapException("Internal error", jpath);
 	}

@@ -412,7 +412,7 @@ public class JSONSchemaForXMLTest {
 		}
 		catch(MapException e) {
 			//ok
-			assertTrue(e.toString().indexOf("Failure to convert text to a number") != -1);
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
 			assertTrue(e.toString().indexOf("path: /root/aNumber") != -1);
 		}
 
@@ -469,7 +469,7 @@ public class JSONSchemaForXMLTest {
 		}
 		catch(MapException e) {
 			//ok
-			assertTrue(e.toString().indexOf("Failure to convert text to an integer") != -1);
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
 			assertTrue(e.toString().indexOf("path: /root/anInteger") != -1);
 		}
 		try {
@@ -494,7 +494,7 @@ public class JSONSchemaForXMLTest {
 			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"aBoolean\":false}")));
 			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
 			assertTrue(XMLComparator.areObjectsEqual(d, "<root><aBoolean>false</aBoolean></root>"));
-			xml = "<root><aNullableNumber>null</aNullableNumber></root>";
+			xml = "<root><aNullableNumber/></root>";
 			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
 			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"aNullableNumber\":null}")));
 			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
@@ -511,7 +511,7 @@ public class JSONSchemaForXMLTest {
 		}
 		catch(MapException e) {
 			//ok
-			assertTrue(e.toString().indexOf("Failure to convert text to a boolean") != -1);
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
 			assertTrue(e.toString().indexOf("path: /root/aBoolean") != -1);
 		}
 		try {
@@ -531,7 +531,7 @@ public class JSONSchemaForXMLTest {
 		}
 		catch(MapException e) {
 			//ok
-			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
+			assertTrue(e.toString().indexOf("Failure to convert text to a number") != -1);
 			assertTrue(e.toString().indexOf("path: /root/aNumber") != -1);
 		}
 		try {
@@ -556,11 +556,11 @@ public class JSONSchemaForXMLTest {
 		}
 		try {
 			//simple aNumber property
-			xml = "<root><aString>aaa</aString><anObject><str1>one</str1><str2>two</str2></anObject><aNumber>123.456</aNumber><aNullableNumber>null</aNullableNumber></root>";
+			xml = "<root><aString>aaa</aString><anObject><str1>one</str1><str2>two</str2></anObject><aNumber>123.456</aNumber><aNullableNumber></aNullableNumber></root>";
 			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
 			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"aNumber\":123.456,\"aString\":\"aaa\",\"anObject\":{\"str1\":\"one\",\"str2\":\"two\"},\"aNullableNumber\":null}")));
 			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
-			assertTrue(XMLComparator.areObjectsEqual(d, "<root><aNumber>123.456</aNumber><aString>aaa</aString><aNullableNumber>null</aNullableNumber><anObject><str1>one</str1><str2>two</str2></anObject></root>"));
+			assertTrue(XMLComparator.areObjectsEqual(d, "<root><aNumber>123.456</aNumber><aString>aaa</aString><aNullableNumber/><anObject><str1>one</str1><str2>two</str2></anObject></root>"));
 			xml = "<root><aString>aaa</aString><anObject2><str1>one</str1><str2>two</str2><nb1>777</nb1></anObject2><anObject><str1>one</str1><str2>two</str2></anObject><aNumber>123.456</aNumber></root>";
 			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
 			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"aNumber\":123.456,\"aString\":\"aaa\",\"anObject\":{\"str1\":\"one\",\"str2\":\"two\"},\"anObject2\":{\"str1\":\"one\",\"str2\":\"two\",\"nb1\":777}}")));
@@ -577,23 +577,17 @@ public class JSONSchemaForXMLTest {
 			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
 			assertTrue(XMLComparator.areObjectsEqual(d, "<root><aNumber>123.456</aNumber><aString>aaa</aString><anObject/></root>"));
 			//simple aNumber property
-			xml = "<root><aString>aaa</aString><anObject><str1>one</str1><str2>two</str2></anObject><aNumber>123.456</aNumber><aNullableNumber>null</aNullableNumber></root>";
+			xml = "<root><aString>aaa</aString><anObject><str1>one</str1><str2>two</str2></anObject><aNumber>123.456</aNumber><aNullableNumber></aNullableNumber></root>";
 			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
 			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"aNumber\":123.456,\"aString\":\"aaa\",\"anObject\":{\"str1\":\"one\",\"str2\":\"two\"},\"aNullableNumber\":null}")));
 			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
-			assertTrue(XMLComparator.areObjectsEqual(d, "<root><aNumber>123.456</aNumber><aString>aaa</aString><aNullableNumber>null</aNullableNumber><anObject><str1>one</str1><str2>two</str2></anObject></root>"));
+			assertTrue(XMLComparator.areObjectsEqual(d, "<root><aNumber>123.456</aNumber><aString>aaa</aString><aNullableNumber/><anObject><str1>one</str1><str2>two</str2></anObject></root>"));
 			//additionalProperty (both attribute and element)
-			xml = "<root><aString>aaa</aString><anObject adprop2=\"bbb\"><str1>one</str1><str2>two</str2><adprop1>aaa</adprop1></anObject><aNumber>123.456</aNumber><aNullableNumber>null</aNullableNumber></root>";
+			xml = "<root><aString>aaa</aString><anObject adprop2=\"bbb\"><str1>one</str1><str2>two</str2><adprop1>aaa</adprop1></anObject><aNumber>123.456</aNumber><aNullableNumber></aNullableNumber></root>";
 			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
 			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"aNumber\":123.456,\"aString\":\"aaa\",\"anObject\":{\"str1\":\"one\",\"str2\":\"two\",\"adprop1\":\"aaa\",\"adprop2\":\"bbb\"},\"aNullableNumber\":null}")));
 			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
-			assertTrue(XMLComparator.areObjectsEqual(d, "<root><aNumber>123.456</aNumber><aString>aaa</aString><aNullableNumber>null</aNullableNumber><anObject><str1>one</str1><str2>two</str2><adprop1>aaa</adprop1><adprop2>bbb</adprop2></anObject></root>"));
-			//TODO null xml object
-//			xml = "<root><anObject2>null</anObject2></root>";
-//			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
-//			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"anObject2\":null}")));
-//			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
-//			assertTrue(XMLComparator.areObjectsEqual(d, xml));
+			assertTrue(XMLComparator.areObjectsEqual(d, "<root><aNumber>123.456</aNumber><aString>aaa</aString><aNullableNumber/><anObject><str1>one</str1><str2>two</str2><adprop1>aaa</adprop1><adprop2>bbb</adprop2></anObject></root>"));
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -932,7 +926,7 @@ public class JSONSchemaForXMLTest {
 			fail("invalid integer property should throw exception");
 		}
 		catch(MapException e) {
-			assertTrue(e.toString().indexOf("Failure to convert text to an integer") != -1);
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
 			assertTrue(e.toString().indexOf("path: /root/@xmlint1") != -1);			
 		}
 		
@@ -1350,7 +1344,7 @@ public class JSONSchemaForXMLTest {
 			fail("invalid integer property should throw exception");
 		}
 		catch(MapException e) {
-			assertTrue(e.toString().indexOf("Failure to convert text to an integer") != -1);
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
 			assertTrue(e.toString().indexOf("path: /root/ARRAYS/ARRAY[1]/INT[3]") != -1);			
 		}	
 
@@ -1360,7 +1354,7 @@ public class JSONSchemaForXMLTest {
 			fail("invalid integer property should throw exception");
 		}
 		catch(MapException e) {
-			assertTrue(e.toString().indexOf("Failure to convert text to an integer") != -1);
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
 			assertTrue(e.toString().indexOf("path: /root/ARRAYS/ARRAY[2]/INT[2]") != -1);			
 		}	
 
@@ -1510,18 +1504,11 @@ public class JSONSchemaForXMLTest {
 		
 		try {
 			//array with 1 null item
-			xml = "<root><numbers1><numbers1>1</numbers1><numbers1>null</numbers1><numbers1>3</numbers1></numbers1></root>";
+			xml = "<root><numbers1><numbers1>1</numbers1><numbers1></numbers1><numbers1>3</numbers1></numbers1></root>";
 			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
 			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"relationships\":[],\"numbers1\":[1,null,3],\"phones2\":[],\"arrayOfArrays2\":[],\"phones1\":[]}")));
 			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
-			assertTrue(XMLComparator.areObjectsEqual(d, xml));
-			//TODO array with null content
-//			xml = "<root><numbers2>null</numbers2></root>";
-//			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
-//			System.out.println(o);
-//			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"relationships\":[],\"numbers2\":null,\"phones2\":[],\"arrayOfArrays2\":[],\"phones1\":[]}")));
-//			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
-//			assertTrue(XMLComparator.areObjectsEqual(d, xml));
+			assertTrue(XMLComparator.areObjectsEqual(d, "<root><numbers1><numbers1>1</numbers1><numbers1/><numbers1>3</numbers1></numbers1></root>"));
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -1803,5 +1790,131 @@ public class JSONSchemaForXMLTest {
 			assertTrue(e.toString().indexOf("XML parsing error") != -1);
 			assertTrue(e.toString().indexOf("path: /root/d") != -1);			
 		}			
+	}
+	
+	@Test
+	public void testJSONSchema_null() {
+		String schema = null;
+		JSONObject o = null;
+		Document d = null;
+		String xml = null;
+		String ostr = null;
+
+		String resourceName = JSON_TEST_FILES_FOLDER + "schema_null.json";
+		try {
+			schema = convertInputStreamToString(this.getClass().getClassLoader().getResourceAsStream(resourceName), Charset.defaultCharset());
+			assertTrue(schema.indexOf("$schema") != -1); //load string ok
+		} catch (IOException e) {
+			fail("Failed to load " + resourceName + ", e=" + e);
+			return;
+		}
+		JSONSchemaForXML jsonSchemaForXML = null;
+		try {
+			jsonSchemaForXML = new JSONSchemaForXML(schema);
+		} catch(JSONSchemaLoadException e) {
+			e.printStackTrace();
+			fail("Failed to parse schema, e=" + e);
+			return;
+		}
+
+		try {
+			//normal values
+			xml = "<root><anObject int_attr=\"1\" int_attr_nullable=\"2\" str_attr=\"a\" str_attr_nullable=\"b\"><str>c</str><str_nullable>d</str_nullable><int_nullable>4</int_nullable><int>3</int></anObject></root>";
+			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
+			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"anObject\":{\"str\":\"c\",\"int_attr\":1,\"str_nullable\":\"d\",\"int_nullable\":4,\"str_attr\":\"a\",\"int_attr_nullable\":2,\"int\":3,\"str_attr_nullable\":\"b\"}}")));
+			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
+			assertTrue(XMLComparator.areObjectsEqual(d, xml));
+			//all nullable int are empty
+			xml = "<root><anObject int_attr=\"1\" int_attr_nullable=\"\" str_attr=\"a\" str_attr_nullable=\"b\"><str>c</str><str_nullable>d</str_nullable><int_nullable/><int>3</int></anObject></root>";
+			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
+			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"anObject\":{\"str\":\"c\",\"int_attr\":1,\"str_nullable\":\"d\",\"int_nullable\":null,\"str_attr\":\"a\",\"int_attr_nullable\":null,\"int\":3,\"str_attr_nullable\":\"b\"}}")));
+			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
+			assertTrue(XMLComparator.areObjectsEqual(d, xml));
+			//all nullable str are empty
+			xml = "<root><anObject int_attr=\"1\" int_attr_nullable=\"2\" str_attr=\"a\" str_attr_nullable=\"\"><str>c</str><str_nullable/><int_nullable>4</int_nullable><int>3</int></anObject></root>";
+			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
+			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"anObject\":{\"str\":\"c\",\"int_attr\":1,\"str_nullable\":\"\",\"int_nullable\":4,\"str_attr\":\"a\",\"int_attr_nullable\":2,\"int\":3,\"str_attr_nullable\":\"\"}}")));
+			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
+			assertTrue(XMLComparator.areObjectsEqual(d, xml));
+			//nullable strings map to empty strings
+			ostr = "{\"anObject\":{\"str\":\"c\",\"int_attr\":1,\"str_nullable\":null,\"int_nullable\":4,\"str_attr\":\"a\",\"int_attr_nullable\":2,\"int\":3,\"str_attr_nullable\":null}}";
+			d = jsonSchemaForXML.mapJSONToXMLDocument(ostr);
+			xml = "<root><anObject int_attr=\"1\" int_attr_nullable=\"2\" str_attr=\"a\" str_attr_nullable=\"\"><str>c</str><str_nullable/><int_nullable>4</int_nullable><int>3</int></anObject></root>";
+			assertTrue(XMLComparator.areObjectsEqual(d, xml));
+			//empty non nullable strings are ok
+			xml = "<root><anObject int_attr=\"1\" int_attr_nullable=\"2\" str_attr=\"\" str_attr_nullable=\"b\"><str/><str_nullable>d</str_nullable><int_nullable>4</int_nullable><int>3</int></anObject></root>";
+			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
+			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"anObject\":{\"str\":\"\",\"int_attr\":1,\"str_nullable\":\"d\",\"int_nullable\":4,\"str_attr\":\"\",\"int_attr_nullable\":2,\"int\":3,\"str_attr_nullable\":\"b\"}}")));
+			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
+			assertTrue(XMLComparator.areObjectsEqual(d, xml));
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			fail("Should not throw exception: " + e);
+		}
+		
+		try {
+			//non nullable attribute
+			xml = "<root><anObject int_attr=\"\" int_attr_nullable=\"2\" str_attr=\"a\" str_attr_nullable=\"b\"><str>c</str><str_nullable>d</str_nullable><int_nullable>4</int_nullable><int>3</int></anObject></root>";
+			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
+			fail("non nullable should throw exception");
+		}
+		catch(Exception e) {
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
+			assertTrue(e.toString().indexOf("path: /root/anObject/@int_attr") != -1);			
+		}
+		
+		try {
+			//non nullable property
+			xml = "<root><anObject int_attr=\"1\" int_attr_nullable=\"2\" str_attr=\"a\" str_attr_nullable=\"b\"><str>c</str><str_nullable>d</str_nullable><int_nullable>4</int_nullable><int></int></anObject></root>";
+			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
+			fail("non nullable should throw exception");
+		}
+		catch(Exception e) {
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
+			assertTrue(e.toString().indexOf("path: /root/anObject/int") != -1);			
+		}	
+
+		try {
+			//str null
+			ostr = "{\"anObject\":{\"str\":null,\"int_attr\":1,\"str_nullable\":\"d\",\"int_nullable\":4,\"str_attr\":\"a\",\"int_attr_nullable\":2,\"int\":3,\"str_attr_nullable\":\"b\"}}";
+			d = jsonSchemaForXML.mapJSONToXMLDocument(ostr);
+			fail("non nullable should throw exception");
+		}
+		catch(Exception e) {
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
+			assertTrue(e.toString().indexOf("path: $.anObject.str") != -1);			
+		}	
+		try {
+			//str_attr null
+			ostr = "{\"anObject\":{\"str\":\"c\",\"int_attr\":1,\"str_nullable\":\"d\",\"int_nullable\":4,\"str_attr\":null,\"int_attr_nullable\":2,\"int\":3,\"str_attr_nullable\":\"b\"}}";
+			d = jsonSchemaForXML.mapJSONToXMLDocument(ostr);
+			fail("non nullable should throw exception");
+		}
+		catch(Exception e) {
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
+			assertTrue(e.toString().indexOf("path: $.anObject.str_attr") != -1);			
+		}	
+		try {
+			//int_attr null
+			ostr = "{\"anObject\":{\"str\":\"c\",\"int_attr\":null,\"str_nullable\":\"d\",\"int_nullable\":4,\"str_attr\":\"a\",\"int_attr_nullable\":2,\"int\":3,\"str_attr_nullable\":\"b\"}}";
+			d = jsonSchemaForXML.mapJSONToXMLDocument(ostr);
+			fail("non nullable should throw exception");
+		}
+		catch(Exception e) {
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
+			assertTrue(e.toString().indexOf("path: $.anObject.int_attr") != -1);			
+		}	
+		try {
+			//int null
+			ostr = "{\"anObject\":{\"str\":\"c\",\"int_attr\":1,\"str_nullable\":\"d\",\"int_nullable\":4,\"str_attr\":\"a\",\"int_attr_nullable\":2,\"int\":null,\"str_attr_nullable\":\"b\"}}";
+			d = jsonSchemaForXML.mapJSONToXMLDocument(ostr);
+			fail("non nullable should throw exception");
+		}
+		catch(Exception e) {
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
+			assertTrue(e.toString().indexOf("path: $.anObject.int") != -1);			
+		}	
+
 	}
 }

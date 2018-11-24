@@ -164,6 +164,7 @@ Add a dependency to your `pom.xml`:
 |0.8.1|4-Nov-18|Syntax highlighting<br>optimize code for xpath (used when raising exception)|
 |0.9.0|8-Nov-18|JSON to XML implemented|
 |0.9.1|17-Nov-18|Code cleanup and more test cases|
+|0.9.2|24-Nov-18|Full support of null and nullable attribute for primitive types|
 
 # TODO (by order of priority):
 * ability to control for XML to JSON
