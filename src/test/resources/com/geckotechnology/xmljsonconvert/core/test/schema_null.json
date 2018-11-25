@@ -56,6 +56,43 @@
           }
         }
       }
+    },
+    "anArrayOfInt": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "xml": {
+      	"wrapped": true
+      }
+    },
+    "anArrayOfNullableInt": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "nullable": true
+      },
+      "xml": {
+      	"wrapped": true
+      }
+    },
+    "anObject2": {
+      "type": "object",
+      "properties": {
+ 	    "anArrayOfInt": {
+	      "type": "array",
+	      "items": {
+	        "type": "integer"
+	      }
+	    },
+	    "anArrayOfNullableInt": {
+	      "type": "array",
+	      "items": {
+	        "type": "integer",
+	        "nullable": true
+	      }
+	    }
+      }
     }
   }
 }

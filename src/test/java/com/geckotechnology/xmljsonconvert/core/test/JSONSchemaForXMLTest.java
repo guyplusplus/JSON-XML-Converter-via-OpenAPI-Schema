@@ -1858,6 +1858,18 @@ public class JSONSchemaForXMLTest {
 			d = jsonSchemaForXML.mapJSONToXMLDocument(ostr);
 			xml = "<root><anObject><new_str/></anObject></root>";
 			assertTrue(XMLComparator.areObjectsEqual(d, xml));
+			//array
+			xml = "<root><anArrayOfNullableInt><anArrayOfNullableInt>1</anArrayOfNullableInt><anArrayOfNullableInt/><anArrayOfNullableInt>3</anArrayOfNullableInt></anArrayOfNullableInt></root>";
+			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
+			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"anArrayOfNullableInt\":[1,null,3]}")));
+			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
+			assertTrue(XMLComparator.areObjectsEqual(d, xml));
+			//array 2
+			xml = "<root><anObject2><anArrayOfInt>1</anArrayOfInt><anArrayOfInt>2</anArrayOfInt><anArrayOfNullableInt>3</anArrayOfNullableInt><anArrayOfNullableInt/><anArrayOfNullableInt>5</anArrayOfNullableInt></anObject2></root>";
+			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
+			assertTrue(JSONComparator.areObjectsEqual(o, new JSONObject("{\"anObject2\":{\"anArrayOfInt\":[1,2],\"anArrayOfNullableInt\":[3,null,5]}}")));
+			d = jsonSchemaForXML.mapJSONToXMLDocument(o.toString());
+			assertTrue(XMLComparator.areObjectsEqual(d, xml));
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -1946,6 +1958,48 @@ public class JSONSchemaForXMLTest {
 		catch(Exception e) {
 			assertTrue(e.toString().indexOf("Additonal property is not nullable") != -1);
 			assertTrue(e.toString().indexOf("path: $.anObject.new_array[1]") != -1);			
+		}
+		
+		try {
+			//non nullable array
+			xml = "<root><anArrayOfInt><anArrayOfInt>1</anArrayOfInt><anArrayOfInt/><anArrayOfInt>3</anArrayOfInt></anArrayOfInt></root>";
+			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
+			fail("non nullable array item should throw exception");
+		}
+		catch(Exception e) {
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
+			assertTrue(e.toString().indexOf("path: /root/anArrayOfInt/anArrayOfInt[2]") != -1);			
+		}
+		try {
+			//additional new null property
+			ostr = "{\"anArrayOfInt\":[1,null,3]}";
+			d = jsonSchemaForXML.mapJSONToXMLDocument(ostr);
+			fail("additional new null property should throw exception");
+		}
+		catch(Exception e) {
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
+			assertTrue(e.toString().indexOf("path: $.anArrayOfInt[1]") != -1);			
+		}	
+
+		try {
+			//non nullable array
+			xml = "<root><anObject2><anArrayOfInt>1</anArrayOfInt><anArrayOfInt></anArrayOfInt><anArrayOfNullableInt>3</anArrayOfNullableInt><anArrayOfNullableInt/><anArrayOfNullableInt>5</anArrayOfNullableInt></anObject2></root>";
+			o = jsonSchemaForXML.mapXMLToJSONObject(xml);
+			fail("non nullable array item should throw exception");
+		}
+		catch(Exception e) {
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
+			assertTrue(e.toString().indexOf("path: /root/anObject2/anArrayOfInt[2]") != -1);			
+		}	
+		try {
+			//additional new null property
+			ostr = "{\"anObject2\":{\"anArrayOfInt\":[1,2,null],\"anArrayOfNullableInt\":[3,null,5]}}";
+			d = jsonSchemaForXML.mapJSONToXMLDocument(ostr);
+			fail("additional new null property should throw exception");
+		}
+		catch(Exception e) {
+			assertTrue(e.toString().indexOf("Property is not nullable") != -1);
+			assertTrue(e.toString().indexOf("path: $.anObject2.anArrayOfInt[2]") != -1);			
 		}	
 	}
 }
