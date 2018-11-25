@@ -1,3 +1,6 @@
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.geckotechnology/xmljsonconvert/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.geckotechnology/xmljsonconvert/)
+[![GitHub release](https://img.shields.io/github/release/guyplusplus/JSON-XML-Converter-via-OpenAPI-Schema.svg)](https://github.com/guyplusplus/JSON-XML-Converter-via-OpenAPI-Schema/releases)
+
 # JSON-XML Converter via OpenAPI Schema 
 This library converts JSON to and from XML based on the JSON schema objects included in the swagger / OpenAPI 3 document. The schema objects contain XML hints that adds more capability. For more information:
 * introduction: https://swagger.io/docs/specification/data-models/representing-xml/
