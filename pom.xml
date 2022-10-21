@@ -4,7 +4,7 @@
 	<groupId>com.geckotechnology</groupId>
 	<artifactId>xmljsonconvert</artifactId>
 	<packaging>jar</packaging>
-	<version>0.9.2</version>
+	<version>0.9.2.2</version>
 
 	<name>JSON-XML-Converter-via-OpenAPI-Schema</name>
 	<description>This library converts JSON to and from XML based on the JSON schema included in the swagger / OpenAPI 3 document. It is a JAVA based library</description>
@@ -12,8 +12,8 @@
 
 	<licenses>
 		<license>
-			<name>GPL 3.0</name>
-			<url>https://github.com/guyplusplus/JSON-XML-Converter-via-OpenAPI-Schema/blob/master/LICENSE</url>
+			<name>Apache License, Version 2.0</name>
+			<url>https://github.com/guyplusplus/JSON-XML-Converter-via-OpenAPI-Schema/blob/master/LICENSE.txt</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
