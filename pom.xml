@@ -4,7 +4,7 @@
 	<groupId>com.geckotechnology</groupId>
 	<artifactId>xmljsonconvert</artifactId>
 	<packaging>jar</packaging>
-	<version>0.9.5</version>
+	<version>0.9.5-SNAPSHOT</version>
 
 	<name>JSON-XML-Converter-via-OpenAPI-Schema</name>
 	<description>This library converts JSON to and from XML based on the JSON schema included in the swagger / OpenAPI 3 document. It is a JAVA based library</description>
