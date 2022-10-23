@@ -30,7 +30,7 @@
 		<url>https://github.com/guyplusplus/JSON-XML-Converter-via-OpenAPI-Schema</url>
 		<connection>scm:git:https://github.com/guyplusplus/JSON-XML-Converter-via-OpenAPI-Schema.git</connection>
 		<developerConnection>scm:git:https://github.com/guyplusplus/JSON-XML-Converter-via-OpenAPI-Schema.git</developerConnection>
-	  <tag>xmljsonconvert-0.9.4</tag>
+	  <tag>xmljsonconvert-${version}</tag>
   </scm>
 
 	<properties>
